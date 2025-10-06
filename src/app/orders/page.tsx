@@ -1,10 +1,10 @@
 import { AdminLayout } from "../_components/AdminLayout";
 
-export const productsPage = () => {
+export const ordersPage = () => {
   return (
     <AdminLayout>
-      <div>Products page</div>
+      <div>Orders page</div>
     </AdminLayout>
   );
 };
-export default productsPage;
+export default ordersPage;
