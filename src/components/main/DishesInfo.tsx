@@ -1,8 +1,12 @@
+"use client";
 import { RiExpandUpDownLine } from "react-icons/ri";
 import { FiTrash } from "react-icons/fi";
 import { X } from "lucide-react";
+import { useState } from "react";
 
 export const DishesInfo = () => {
+  const [isOpen, setIsOpen] = useState(false);
+  const [preview, setPreview] = useState("");
   return (
     <div className="max-w-[424px] max-h-[584px] bg-background-bg-background rounded-xl inline-flex flex-col justify-start items-start gap-3">
       <div className="self-stretch inline-flex justify-center items-center gap-2.5">
@@ -68,12 +72,14 @@ export const DishesInfo = () => {
           <div className="flex-1 justify-start text-text-text-muted-foreground text-xs font-normal  leading-none">
             Image
           </div>
-          <img
-            className="w-full h-36  outline   inline-flex flex-col justify-center items-center"
-            src="/Users/25LP5598/Documents/food-delivery-app/admin-food-delivery/public/delicious-food.png"
-          />
-          <div className="w-9 h-9 px-4 py-2 left-[380px] top-[20px] absolute bg-background-bg-background rounded-full outline outline-offset-[-1px] outline-border-border-input flex justify-center items-center gap-2">
-            <X className="bg-red-500" />
+          <div className="w-[288px] h-[116px] rounded-full relative">
+            <img
+              className="w-full h-full  outline   inline-flex flex-col justify-center items-center"
+              src="/Users/25LP5598/Documents/food-delivery-app/admin-food-delivery/public/delicious-food.png"
+            />
+            <div className="w-9 h-9 flex justify-center items-center absolute top-2 right-2 bg-amber-200 rounded-full">
+              <X className="w-4 h-4  " />
+            </div>
           </div>
         </div>
       </div>
