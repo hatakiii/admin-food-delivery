@@ -7,7 +7,7 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 
-import { DishesInfo } from "@/components/main";
+import { AddNewDishes } from "@/components/main";
 
 export const AppetizersEdit = () => {
   return (
@@ -28,7 +28,7 @@ export const AppetizersEdit = () => {
           <DialogHeader>
             <DialogTitle></DialogTitle>
             <DialogDescription asChild className="w-[472px] h-[596px]">
-              <DishesInfo />
+              <AddNewDishes />
             </DialogDescription>
           </DialogHeader>
         </DialogContent>
