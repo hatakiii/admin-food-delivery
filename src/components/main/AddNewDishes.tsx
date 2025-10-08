@@ -1,5 +1,5 @@
 "use client";
-import React, { use, useState } from "react";
+import React, { ChangeEvent, ReactHTMLElement, use, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { GoImage } from "react-icons/go";
 
@@ -7,6 +7,7 @@ export const AddNewDishes = () => {
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
   const [name, setName] = useState<string>("");
   const [price, setPrice] = useState<number>(0);
+  const [image, setImage] = useState<File | undefined>(undefined);
 
   function handleImage(event: React.ChangeEvent<HTMLInputElement>) {
     if (event.target.files?.[0]) {
@@ -17,7 +18,23 @@ export const AddNewDishes = () => {
   }
 
   function addFoodHandler() {
-    console.log();
+    // console.log({name});
+    // console.log({price});
+    fetch("https://localhost:4000/create-food", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      // body: JSON.stringify({ price, name, }),
+    });
+  }
+
+  function nameChangeHandler(e: ChangeEvent<HTMLInputElement>) {
+    setName(e.target.value);
+  }
+
+  function priceChangeHandler(e: ChangeEvent<HTMLInputElement>) {
+    setPrice(Number(e.target.value));
   }
 
   return (
@@ -36,9 +53,9 @@ export const AddNewDishes = () => {
             type="text"
             placeholder="Type food name"
             className="border rounded px-2 py-1"
-            defaultValue={name}
+            // defaultValue={name}
             value={name}
-            // onChange={nameChangeHandler}
+            onChange={nameChangeHandler}
           />
         </div>
         <div className="flex flex-col gap-2">
@@ -46,9 +63,12 @@ export const AddNewDishes = () => {
             Food price
           </p>
           <input
-            type="text"
+            type="number"
             placeholder="Enter price..."
             className="border rounded px-2 py-1"
+            defaultValue={0}
+            value={price}
+            onChange={priceChangeHandler}
           />
         </div>
       </div>
@@ -96,6 +116,7 @@ export const AddNewDishes = () => {
               accept="image/*"
               className="hidden"
               onChange={handleImage}
+              // value={image}
             />
           </label>
         ) : (
