@@ -24,7 +24,7 @@ export const AppetizersEdit = () => {
             </div>
           </div>
         </DialogTrigger>
-        <DialogContent>
+        <DialogContent className="p-0 flex justify-center items-center">
           <DialogHeader>
             <DialogTitle></DialogTitle>
             <DialogDescription asChild className="w-[472px] h-[596px]">

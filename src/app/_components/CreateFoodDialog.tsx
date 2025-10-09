@@ -26,14 +26,14 @@ export const CreateFoodDialog = () => {
 
     const form = new FormData();
 
-    form.append("foodName", name);
+    form.append("name", name);
     form.append("price", String(price));
-    form.append("asd", image); // File object
+    form.append("image", image); // File object
     form.append("ingredients", ingredients);
     form.append("category", category);
 
     try {
-      const response = await fetch("http://localhost:4000/create-food", {
+      const response = await fetch("http://localhost:4000/api/food", {
         method: "POST",
         body: form,
       });
@@ -85,7 +85,7 @@ export const CreateFoodDialog = () => {
             <Input
               id="name"
               name="name"
-              defaultValue={name}
+              // defaultValue={name}
               value={name}
               onChange={nameChangeHandler}
             />
