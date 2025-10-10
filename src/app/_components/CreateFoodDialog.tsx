@@ -96,7 +96,7 @@ export const CreateFoodDialog = () => {
               id="price"
               name="price"
               type="number"
-              defaultValue="0"
+              // defaultValue="0"
               value={price}
               onChange={priceChangeHandler}
             />
