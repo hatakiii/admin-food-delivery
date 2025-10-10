@@ -64,7 +64,7 @@ export default function ProductPage() {
 
   return (
     <AdminLayout>
-      <div className="flex flex-wrap gap-2">
+      {/* <div className="flex flex-wrap gap-2">
         {categories.map((category) => (
           <div
             className="flex items-center border-2 rounded-full p-2 py-0"
@@ -99,7 +99,7 @@ export default function ProductPage() {
             <Button onClick={createCategoryHandler}>Create</Button>
           </DialogContent>
         </Dialog>
-      </div>
+      </div> */}
       <CreateFoodDialog />
     </AdminLayout>
   );
