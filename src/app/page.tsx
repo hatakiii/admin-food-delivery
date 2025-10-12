@@ -5,14 +5,16 @@ import { DishesCategory } from "@/components/main/DishesCategory";
 import { AppetizersEdit } from "@/components/main/AppetizersEdit";
 import { AddNewDishes } from "@/components/main";
 import { AddedDishes } from "@/components/main/AddedDishes";
+import { Container } from "@/components/container/Container";
 
 export default function Home() {
   return (
     <AdminLayout>
       <div>
         <DishesCategory />
-        <AppetizersEdit />
-        <AddedDishes />
+        {/* <AppetizersEdit />
+        <AddedDishes /> */}
+        <Container />
       </div>
     </AdminLayout>
   );

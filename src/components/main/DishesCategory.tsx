@@ -39,12 +39,12 @@ export const DishesCategory = () => {
 
         <Dialog>
           <form>
-            <DialogTrigger>
-              <div className="w-9 h-9  bg-red-500 rounded-full flex  justify-center items-center gap-2">
+            <DialogTrigger asChild>
+              <button className="w-9 h-9  bg-red-500 rounded-full flex  justify-center items-center gap-2">
                 <div className="w-4 h-4 flex items-center justify-center">
                   +
                 </div>
-              </div>
+              </button>
             </DialogTrigger>
             <DialogContent className="sm:max-w-[425px]">
               <DialogHeader>
