@@ -5,11 +5,11 @@ export const AddedDishes = () => {
   return (
     <div className="w-67.5 h-60 flex flex-col p-4 border-1 border-[#E4E4E7] rounded-xl gap-5">
       <div className="w-59 h-32 relative overflow-hidden object-contain">
-        <div className="w-59 h-32  overflow-hidden rounded-xl">
+        <div className="w-59 h-32  rounded-xl">
           <img
             src="./delicious-food.png"
             alt="food"
-            className="w-59 h-32 object-cover shrink-fit"
+            className="w-59 h-32 object-cover shrink-fit rounded-2xl"
           />
         </div>
         <div className="absolute right-5 bottom-5 w-11 h-11 bg-white rounded-full flex items-center justify-center">

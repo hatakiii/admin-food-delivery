@@ -12,9 +12,8 @@ export default function Home() {
     <AdminLayout>
       <div>
         <DishesCategory />
-        {/* <AppetizersEdit />
-        <AddedDishes /> */}
-        <Container />
+        <AppetizersEdit />
+        <AddedDishes />
       </div>
     </AdminLayout>
   );
