@@ -27,7 +27,7 @@ export const CreateCategoryDialog = () => {
   const [categories, setCategories] = useState<FoodCategory[]>([]);
 
   const getCategories = async () => {
-    const res = await fetch("http://localhost:4000/api/categories");
+    const res = await fetch("http://localhost:4013/api/categories");
     const resData = await res.json();
     const { data } = resData;
 
@@ -45,7 +45,7 @@ export const CreateCategoryDialog = () => {
     }
 
     try {
-      await fetch("http://localhost:4000/api/categories", {
+      await fetch("http://localhost:4013/api/categories", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -66,7 +66,7 @@ export const CreateCategoryDialog = () => {
     if (confirm("Are you sure you want to delete this category?")) {
       try {
         const response = await fetch(
-          `http://localhost:4000/api/categories/${id}`,
+          `http://localhost:4013/api/categories/${id}`,
           {
             method: "DELETE",
           }

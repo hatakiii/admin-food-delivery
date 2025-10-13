@@ -45,7 +45,7 @@ export const CreateFoodDialog = () => {
   const [foods, setFoods] = useState<Food[]>([]);
 
   const getFoods = async () => {
-    const res = await fetch("http://localhost:4000/api/foods");
+    const res = await fetch("http://localhost:4013/api/foods");
     const resData = await res.json();
     const { data } = resData;
     console.log(data, "data");
@@ -70,7 +70,7 @@ export const CreateFoodDialog = () => {
     form.append("category", category);
     form.append("image", image); // File object
 
-    await fetch("http://localhost:4000/api/foods", {
+    await fetch("http://localhost4013/api/foods", {
       method: "POST",
       // mode: "no-cors",
       body: form,
