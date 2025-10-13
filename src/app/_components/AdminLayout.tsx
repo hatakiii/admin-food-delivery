@@ -1,11 +1,11 @@
-import { Sidebar, Header } from "@/app/_components";
-import { ReactNode } from "react";
+import React, { ReactNode } from "react";
+import { SideBar, Header } from "@/app/_components";
 
 export const AdminLayout = ({ children }: { children: ReactNode }) => {
   return (
     <div className="flex">
-      <Sidebar />
-      <div className="w-full">
+      <SideBar />
+      <div>
         <Header />
         {children}
       </div>

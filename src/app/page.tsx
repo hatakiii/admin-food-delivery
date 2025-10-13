@@ -1,20 +1,12 @@
-import { DishesInfo } from "@/components/main";
-import { AdminLayout } from "./_components/AdminLayout";
+"use client";
+import React from "react";
+import { AdminLayout } from "@/app/_components";
 
-import { DishesCategory } from "@/components/main/DishesCategory";
-import { AppetizersEdit } from "@/components/main/AppetizersEdit";
-import { AddNewDishes } from "@/components/main";
-import { AddedDishes } from "@/components/main/AddedDishes";
-import { Container } from "@/components/container/Container";
-
-export default function Home() {
+const HomePage = () => {
   return (
     <AdminLayout>
-      <div>
-        <DishesCategory />
-        <AppetizersEdit />
-        <AddedDishes />
-      </div>
+      <div className="h-screen pl-6 pt-6 pr-10 bg-secondary"></div>
     </AdminLayout>
   );
-}
+};
+export default HomePage;

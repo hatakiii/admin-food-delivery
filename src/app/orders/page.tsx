@@ -1,10 +1,6 @@
-import { AdminLayout } from "../_components/AdminLayout";
+import React from "react";
 
-export const ordersPage = () => {
-  return (
-    <AdminLayout>
-      <div>Orders page</div>
-    </AdminLayout>
-  );
+const OrdersPage = () => {
+  return <div>OrdersPage</div>;
 };
-export default ordersPage;
+export default OrdersPage;
