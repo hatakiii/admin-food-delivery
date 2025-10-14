@@ -1,5 +1,11 @@
-import { AdminLayout } from "../_components/AdminLayout";
+import React from "react";
+import { AdminLayout } from "../_components";
 
-export default function OrdersPage() {
-  return <AdminLayout className="bg-pink-100">Orders Page</AdminLayout>;
-}
+const OrdersPage = () => {
+  return (
+    <AdminLayout>
+      <div>OrdersPage</div>
+    </AdminLayout>
+  );
+};
+export default OrdersPage;
