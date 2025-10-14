@@ -13,6 +13,13 @@ import {
   Textarea,
   Label,
 } from "@/components/ui";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import Image from "next/image";
 import { LuImage } from "react-icons/lu";
 import { LuPen } from "react-icons/lu";
@@ -22,15 +29,20 @@ import { IoCloseOutline } from "react-icons/io5";
 
 //
 interface Food {
-  foodId?: number;
-  foodName: string;
+  _id: number;
+  name: string;
   price: number;
-  image?: string;
+  imageUrl: string;
   ingredients: string;
   category?: string;
   createdAt?: Date;
   updated?: Date;
 }
+
+type CategoryType = {
+  name: string;
+  _id: string;
+};
 //
 
 export const CreateFoodDialog = () => {
@@ -43,6 +55,8 @@ export const CreateFoodDialog = () => {
   const [category, setCategory] = useState<string>("");
   const [image, setImage] = useState<File | undefined | string>();
   const [foods, setFoods] = useState<Food[]>([]);
+  const [categories, setCategories] = useState<CategoryType[]>([]);
+  const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
 
   const getFoods = async () => {
     const res = await fetch("http://localhost:4013/api/foods");
@@ -52,12 +66,20 @@ export const CreateFoodDialog = () => {
 
     setFoods(data);
   };
+
+  const getCategories = async () => {
+    const response = await fetch("http://localhost:4013/api/categories");
+    const data = await response.json();
+    setCategories(data.data);
+  };
+
   useEffect(() => {
     getFoods();
+    getCategories();
   }, []);
 
   const addFoodHandler = async () => {
-    if (!foodName || !price || !ingredients || !category || !image) {
+    if (!foodName || !price || !ingredients || !selectedCategory || !image) {
       alert("All fields are required!");
       return;
     }
@@ -67,7 +89,7 @@ export const CreateFoodDialog = () => {
     form.append("foodName", foodName);
     form.append("price", String(price));
     form.append("ingredients", ingredients);
-    form.append("category", category);
+    form.append("categoryId", selectedCategory);
     form.append("image", image); // File object
 
     await fetch("http://localhost:4013/api/foods", {
@@ -83,7 +105,7 @@ export const CreateFoodDialog = () => {
     setFoodName("");
     setPrice(0);
     setIngredients("");
-    setCategory("");
+    setSelectedCategory(null);
     setImage(undefined);
     setIsOpen(false);
   };
@@ -107,6 +129,8 @@ export const CreateFoodDialog = () => {
       setImagePreview(filePreview);
     }
   };
+
+  console.log("Foods", foods);
 
   return (
     <div className="p-5 bg-background rounded-xl">
@@ -198,7 +222,7 @@ export const CreateFoodDialog = () => {
               />
             </div>
 
-            <div className="flex flex-col gap-2">
+            {/* <div className="flex flex-col gap-2">
               <Label htmlFor="category" className="text-foreground">
                 Category
               </Label>
@@ -211,6 +235,25 @@ export const CreateFoodDialog = () => {
                 value={category}
                 onChange={categoryChangeHandler}
               />
+            </div> */}
+
+            <div className="flex gap-3">
+              {categories.length > 0 && (
+                <Select onValueChange={(value) => setSelectedCategory(value)}>
+                  <SelectTrigger className="w-[180px]">
+                    <SelectValue placeholder="Select Category" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    {categories.map((category) => {
+                      return (
+                        <SelectItem key={category._id} value={category._id}>
+                          {category.name}
+                        </SelectItem>
+                      );
+                    })}
+                  </SelectContent>
+                </Select>
+              )}
             </div>
 
             <div className="flex flex-col gap-2">
@@ -272,21 +315,19 @@ export const CreateFoodDialog = () => {
 
         {/* After Add garch ireh card => + edit card */}
 
-        {foods.map((food, id) => (
+        {foods.map((food) => (
           <div
-            key={id}
+            key={food._id}
             className="w-[270.75px] p-4 border border-border rounded-[20px] flex flex-col gap-5"
           >
             <div className="w-full h-[129px] rounded-xl relative overflow-hidden">
-              {image ? (
+              {food.imageUrl && (
                 <Image
-                  src={imagePreview}
+                  src={food.imageUrl}
                   alt="imagePreview"
                   fill
                   objectFit="cover"
                 />
-              ) : (
-                ""
               )}
 
               <Dialog open={editIsOpen}>
@@ -394,7 +435,7 @@ export const CreateFoodDialog = () => {
                         Image
                       </Label>
 
-                      {image ? (
+                      {/* {image ? (
                         <div className="w-full h-29 rounded-md relative overflow-hidden">
                           <Image
                             src={imagePreview}
@@ -406,9 +447,9 @@ export const CreateFoodDialog = () => {
                             type="button"
                             variant="outline"
                             className="absolute w-9 h-9 rounded-full right-2 top-2"
-                            onClick={() => {
-                              setImage("");
-                            }}
+                            // onClick={() => {
+                            //   setImage("");
+                            // }}
                           >
                             <IoCloseOutline size={16} />
                           </Button>
@@ -431,7 +472,7 @@ export const CreateFoodDialog = () => {
                             </p>
                           </div>
                         </div>
-                      )}
+                      )} */}
                     </div>
                   </div>
 
@@ -462,7 +503,7 @@ export const CreateFoodDialog = () => {
             <div className="flex flex-col gap-2">
               <div className="flex items-center gap-2.5">
                 <div className="text-sm leading-5 font-medium text-red-500 flex-1 items-center">
-                  {food.foodName}
+                  {food.name}
                 </div>
                 <div className="text-xs leading-4 text-foreground">
                   ${food.price}
