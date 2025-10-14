@@ -113,7 +113,7 @@ export const CreateCategoryDialog = () => {
               </p>
 
               <Badge className="rounded-full px-2.5">
-                <p className="leading-4 font-semibold">{100}</p>
+                <p className="leading-4 font-semibold">0</p>
               </Badge>
               <div onClick={() => deleteCategoryHandler(category._id)}>
                 <IoCloseOutline />

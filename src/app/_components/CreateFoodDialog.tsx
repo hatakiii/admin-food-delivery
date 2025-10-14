@@ -20,7 +20,7 @@ import { LuTrash } from "react-icons/lu";
 import { GoPlus } from "react-icons/go";
 import { IoCloseOutline } from "react-icons/io5";
 
-// tur zuur
+//
 interface Food {
   foodId?: number;
   foodName: string;
@@ -31,7 +31,7 @@ interface Food {
   createdAt?: Date;
   updated?: Date;
 }
-// tur zuur
+//
 
 export const CreateFoodDialog = () => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
@@ -70,9 +70,11 @@ export const CreateFoodDialog = () => {
     form.append("category", category);
     form.append("image", image); // File object
 
-    await fetch("http://localhost4013/api/foods", {
+    await fetch("http://localhost:4013/api/foods", {
       method: "POST",
-      // mode: "no-cors",
+      headers: {
+        "Content-Type": "application/json",
+      },
       body: form,
     });
 

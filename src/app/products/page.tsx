@@ -9,7 +9,7 @@ import {
 const ProductsPage = () => {
   return (
     <AdminLayout>
-      <div className="h-screen pl-6 pr-10 bg-secondary flex flex-col gap-6">
+      <div className="h-screen w-full pl-6 pr-10 bg-secondary flex flex-col gap-6">
         <CreateCategoryDialog />
         <CreateFoodDialog />
       </div>
