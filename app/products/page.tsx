@@ -15,6 +15,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { X } from "lucide-react";
 import { ProductCard } from "../_components/ProductCard";
+import { FaPlus } from "react-icons/fa6";
 
 export type CategoryType = {
   name: string;
@@ -71,44 +72,46 @@ export default function ProductPage() {
   return (
     <AdminLayout>
       <div>
-        <div className="flex gap-2">
-          {categories.map((category, index) => (
-            <div
-              className="flex items-center border-2 rounded-full p-2 py-0"
-              key={category._id}
-            >
-              {category.name}
-              <X
-                className="hover:bg-gray-400/20 w-4"
-                onClick={() => deleteCategoryHandler(category._id)}
-              />
-            </div>
-          ))}
-        </div>
-        <div className="flex flex-wrap gap-2">
-          <Dialog open={modalOpen}>
-            <DialogTrigger asChild>
-              <Badge
-                onClick={() => setModalOpen(true)}
-                variant={"outline"}
-                className="cursor-pointer hover:bg-gray-500/20"
+        <div className="flex flex-col gap-4 p-6">
+          <h1 className="text-xl">Dishes category</h1>
+          <div className="flex gap-2 flex-wrap ">
+            {categories.map((category, index) => (
+              <div
+                className="h-9 px-4 py-2 bg-background-bg-background rounded-full outline outline-offset-[-1px] outline-border-border-border inline-flex justify-start items-center gap-2"
+                key={category._id}
               >
-                +
-              </Badge>
-            </DialogTrigger>
-            <DialogContent className="w-[463px] p-6">
-              <DialogHeader>
-                <DialogTitle>Are you absolutely sure?</DialogTitle>
-              </DialogHeader>
-              <Input
-                type="text"
-                placeholder="new category"
-                onChange={newCategoryNameChangeHandler}
-              />
-              <Button onClick={createCategoryHandler}>Create</Button>
-            </DialogContent>
-          </Dialog>
+                {category.name}
+                <X
+                  className="hover:bg-gray-400/20 w-4"
+                  onClick={() => deleteCategoryHandler(category._id)}
+                />
+              </div>
+            ))}
+            <Dialog open={modalOpen}>
+              <DialogTrigger asChild>
+                <Badge
+                  onClick={() => setModalOpen(true)}
+                  variant={"outline"}
+                  className="cursor-pointer hover:bg-gray-500/20 bg-red-600 w-9 h-9 rounded-full"
+                >
+                  <FaPlus className="w-4 h-4 text-white" />
+                </Badge>
+              </DialogTrigger>
+              <DialogContent className="w-[463px] p-6">
+                <DialogHeader>
+                  <DialogTitle>Are you absolutely sure?</DialogTitle>
+                </DialogHeader>
+                <Input
+                  type="text"
+                  placeholder="new category"
+                  onChange={newCategoryNameChangeHandler}
+                />
+                <Button onClick={createCategoryHandler}>Create</Button>
+              </DialogContent>
+            </Dialog>
+          </div>
         </div>
+
         <div className="flex gap-2">
           <CreateFoodDialog />
           <ProductCard />
