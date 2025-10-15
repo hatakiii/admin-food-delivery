@@ -14,6 +14,7 @@ import { ChangeEvent, useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { X } from "lucide-react";
+import { ProductCard } from "../_components/ProductCard";
 
 export type CategoryType = {
   name: string;
@@ -108,7 +109,10 @@ export default function ProductPage() {
             </DialogContent>
           </Dialog>
         </div>
-        <CreateFoodDialog />
+        <div className="flex gap-2">
+          <CreateFoodDialog />
+          <ProductCard />
+        </div>
       </div>
     </AdminLayout>
   );
