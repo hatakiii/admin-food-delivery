@@ -75,9 +75,9 @@ export default function ProductPage() {
         <div className="flex flex-col gap-4 p-6">
           <h1 className="text-xl">Dishes category</h1>
           <div className="flex gap-2 flex-wrap ">
-            {categories.map((category, index) => (
+            {categories.map((category) => (
               <div
-                className="h-9 px-4 py-2 bg-background-bg-background rounded-full outline outline-offset-[-1px] outline-border-border-border inline-flex justify-start items-center gap-2"
+                className="flex items-center border-2 rounded-full p-2 py-0"
                 key={category._id}
               >
                 {category.name}

@@ -92,10 +92,7 @@ export const CreateFoodDialog = () => {
   return (
     <Dialog>
       <DialogTrigger asChild>
-        <div
-          className="w-[270.75px] h-[241px] py-2 px-4 border border-dashed border-red-500 flex flex-col items-center justify-center gap-6 rounded-[20px]"
-          // onClick={() => setIsOpen(true)}
-        >
+        <div className="w-[270.75px] h-[241px] py-2 px-4 border border-dashed border-red-500 flex flex-col items-center justify-center gap-6 rounded-[20px]">
           <Button
             type="button"
             variant="destructive"

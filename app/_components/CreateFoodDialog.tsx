@@ -17,6 +17,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { ChangeEvent, useEffect, useState } from "react";
+import { GoPlus } from "react-icons/go";
 
 export type CategoryType = {
   name: string;
@@ -26,9 +27,11 @@ export type CategoryType = {
 export const CreateFoodDialog = ({
   categoryId,
   refetchFoods,
+  categoryName,
 }: {
   categoryId: string;
   refetchFoods: () => Promise<void>;
+  categoryName: string;
 }) => {
   const [image, setImage] = useState<File | undefined>();
   const [name, setName] = useState<string>("");
@@ -91,9 +94,18 @@ export const CreateFoodDialog = ({
       <DialogTrigger asChild>
         <div
           onClick={() => setOpen(true)}
-          className="cursor-pointer hover:bg-gray-200 rounded-lg w-40 h-40 border border-dashed border-2 flex justify-center items-center"
+          className="w-[270.75px] h-[241px] py-2 px-4 border border-dashed border-red-500 flex flex-col items-center justify-center gap-6 rounded-[20px]"
         >
-          +
+          <Button
+            type="button"
+            variant="destructive"
+            className="w-10 h-10 rounded-full bg-red-500"
+          >
+            <GoPlus size={16} />
+          </Button>
+          <p className="w-[154px] text-center text-sm leading-5 font-medium text-secondary-foreground">
+            Add new Dish to {`${categoryName}`}
+          </p>
         </div>
       </DialogTrigger>
       <DialogContent className="sm:max-w-[425px]">
