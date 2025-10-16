@@ -1,5 +1,6 @@
 import React from "react";
 import Image from "next/image";
+import { CreateFoodDialog } from "./CreateFoodDialog";
 
 interface Food {
   _id?: string;
@@ -30,6 +31,7 @@ export const ProductCard = () => {
   console.log("foods", foods);
   return (
     <div className="flex gap-2 flex-wrap">
+      <CreateFoodDialog />
       {foods.map((food) => (
         <div
           key={food._id}

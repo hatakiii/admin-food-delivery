@@ -113,7 +113,7 @@ export default function ProductPage() {
         </div>
 
         <div className="flex gap-2">
-          <CreateFoodDialog />
+          {/* <CreateFoodDialog /> */}
           <ProductCard />
         </div>
       </div>
