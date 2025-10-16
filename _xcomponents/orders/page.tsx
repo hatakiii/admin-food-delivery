@@ -1,5 +1,5 @@
 import React from "react";
-import { AdminLayout } from "../_components";
+import { AdminLayout } from "../../app/_components";
 
 const OrdersPage = () => {
   return (

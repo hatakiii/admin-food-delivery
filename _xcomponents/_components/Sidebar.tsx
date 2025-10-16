@@ -36,7 +36,7 @@ export const SideBar = () => {
           asChild
           className="rounded-full gap-2.5 has-[>svg]:px-6 py-2.5 h-10"
         >
-          <Link href="/products">
+          <Link href="#">
             <LuLayoutDashboard className="size-[22px]" />
             <p className="w-[85px] text-left">Food menu</p>
           </Link>
@@ -46,7 +46,7 @@ export const SideBar = () => {
           asChild
           className="rounded-full gap-2.5 has-[>svg]:px-6 py-2.5 h-10"
         >
-          <Link href="/orders">
+          <Link href="#">
             <LiaTruckMovingSolid className="size-[22px]" />
             <p className="w-[85px] text-left">Orders</p>
           </Link>
