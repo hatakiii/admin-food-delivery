@@ -1,11 +1,20 @@
-import React, { ReactNode } from "react";
-import { SideBar, Header } from "@/app/_components";
+import { ReactNode } from "react";
+import { Header } from "./Header";
+import { Sidebar } from "./Sidebar";
 
-export const AdminLayout = ({ children }: { children: ReactNode }) => {
+//wrapper component
+export const AdminLayout = ({
+  children,
+  className,
+}: {
+  children: ReactNode;
+  className?: string;
+}) => {
+  const customStyle = className + " w-full";
   return (
-    <div className="flex w-[100vw]">
-      <SideBar />
-      <div>
+    <div className="flex">
+      <Sidebar />
+      <div className={customStyle}>
         <Header />
         {children}
       </div>
