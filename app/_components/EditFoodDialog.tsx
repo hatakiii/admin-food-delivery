@@ -1,0 +1,156 @@
+import { Button } from "@/components/ui/button";
+import {
+  Dialog,
+  DialogContent,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
+
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { ChangeEvent, useEffect, useState } from "react";
+import { GoPlus } from "react-icons/go";
+
+export type CategoryType = {
+  name: string;
+  _id: string;
+};
+
+export const EditFoodDialog = ({
+  categoryId,
+  refetchFoods,
+  categoryName,
+}: {
+  categoryId: string;
+  refetchFoods: () => Promise<void>;
+  categoryName: string;
+}) => {
+  const [image, setImage] = useState<File | undefined>();
+  const [name, setName] = useState<string>("");
+  const [price, setPrice] = useState<number>(0);
+  const [ingredients, setIngredients] = useState<string>("");
+  const [open, setOpen] = useState<boolean>(closed);
+
+  const addFoodHandler = async () => {
+    if (!name || !price || !image || !ingredients) {
+      alert("All fields are required");
+      return;
+    }
+
+    const form = new FormData();
+
+    form.append("name", name);
+    form.append("price", String(price));
+    form.append("image", image); // File object
+    form.append("ingredients", ingredients);
+    form.append("categoryId", categoryId);
+
+    try {
+      const response = await fetch("http://localhost:4000/api/food", {
+        method: "PUT",
+        body: form,
+      });
+
+      const data = await response.json();
+      if (response.ok) {
+        await refetchFoods();
+        setOpen(false);
+        setName("");
+        setPrice(0);
+        setImage(undefined);
+        setIngredients("");
+      } else {
+        alert(data.error || "Failed to create food");
+      }
+    } catch (error) {
+      alert("Failed to create food");
+    }
+  };
+  const nameChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
+    setName(e.target.value);
+  };
+  const priceChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
+    setPrice(Number(e.target.value));
+  };
+  const fileChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files) {
+      setImage(e.target.files[0]);
+    }
+  };
+  const ingredientsChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
+    setIngredients(e.target.value);
+  };
+
+  return (
+    <Dialog open={open} onOpenChange={setOpen}>
+      <DialogTrigger asChild>
+        <div
+          onClick={() => setOpen(true)}
+          className="w-[270.75px] h-[241px] py-2 px-4 border border-dashed border-red-500 flex flex-col items-center justify-center gap-6 rounded-[20px]"
+        >
+          <Button
+            type="button"
+            variant="destructive"
+            className="w-10 h-10 rounded-full bg-red-500"
+          >
+            <GoPlus size={16} />
+          </Button>
+          <p className="w-[154px] text-center text-sm leading-5 font-medium text-secondary-foreground">
+            Add new Dish to {`"${categoryName}"`}
+          </p>
+        </div>
+      </DialogTrigger>
+      <DialogContent className="sm:max-w-[425px]">
+        <DialogHeader>
+          <DialogTitle>Create Food</DialogTitle>
+        </DialogHeader>
+        <div className="grid gap-4">
+          <div className="grid gap-3">
+            <Label htmlFor="name">Name</Label>
+            <Input
+              id="name"
+              name="name"
+              value={name}
+              onChange={nameChangeHandler}
+            />
+          </div>
+          <div className="grid gap-3">
+            <Label htmlFor="price">Price</Label>
+            <Input
+              id="price"
+              name="price"
+              type="number"
+              value={price}
+              onChange={priceChangeHandler}
+            />
+          </div>
+          <div className="grid w-full max-w-sm items-center gap-3">
+            <Label htmlFor="picture">Picture</Label>
+            <Input id="picture" type="file" onChange={fileChangeHandler} />
+          </div>
+          <div className="grid gap-3">
+            <Label htmlFor="ingredients">Ingredients</Label>
+            <Input
+              id="ingredients"
+              name="ingredients"
+              value={ingredients}
+              onChange={ingredientsChangeHandler}
+            />
+          </div>
+
+          <Button
+            type="submit"
+            size={"sm"}
+            className="w-fit px-4 py-[10px]"
+            onClick={addFoodHandler}
+          >
+            <p className="leading-5"> Save changes</p>
+          </Button>
+        </div>
+        <DialogFooter></DialogFooter>
+      </DialogContent>
+    </Dialog>
+  );
+};
