@@ -7,148 +7,188 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
-
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { ChangeEvent, useEffect, useState } from "react";
+import { ChangeEvent, useState } from "react";
 import { GoPlus } from "react-icons/go";
+import { FoodType } from "@/lib/types";
 
-export type CategoryType = {
-  name: string;
-  _id: string;
+type Props = {
+  categoryId: string;
+  refetchFoods: () => Promise<void>;
+  categoryName: string;
+  food?: FoodType; // optional — for edit mode
+  triggerButton?: React.ReactNode; // for ✏️ icon trigger
 };
 
 export const CreateFoodDialog = ({
   categoryId,
   refetchFoods,
   categoryName,
-}: {
-  categoryId: string;
-  refetchFoods: () => Promise<void>;
-  categoryName: string;
-}) => {
+  food,
+  triggerButton,
+}: Props) => {
+  const isEditing = !!food;
   const [image, setImage] = useState<File | undefined>();
-  const [name, setName] = useState<string>("");
-  const [price, setPrice] = useState<number>(0);
-  const [ingredients, setIngredients] = useState<string>("");
-  const [open, setOpen] = useState<boolean>(closed);
+  const [name, setName] = useState<string>(food?.name || "");
+  const [price, setPrice] = useState<number>(food?.price || 0);
+  const [ingredients, setIngredients] = useState<string>(
+    food?.ingredients || ""
+  );
+  const [open, setOpen] = useState<boolean>(false);
 
-  const addFoodHandler = async () => {
-    if (!name || !price || !image || !ingredients) {
+  const handleSubmit = async () => {
+    if (!name || !price || (!image && !isEditing) || !ingredients) {
       alert("All fields are required");
       return;
     }
 
     const form = new FormData();
-
     form.append("name", name);
     form.append("price", String(price));
-    form.append("image", image); // File object
+    if (image) form.append("image", image);
     form.append("ingredients", ingredients);
     form.append("categoryId", categoryId);
 
     try {
-      const response = await fetch("http://localhost:4000/api/food", {
-        method: "POST",
-        body: form,
-      });
+      const response = await fetch(
+        isEditing
+          ? `http://localhost:4000/api/food/${food?._id}`
+          : `http://localhost:4000/api/food`,
+        {
+          method: isEditing ? "PUT" : "POST",
+          body: form,
+        }
+      );
 
       const data = await response.json();
       if (response.ok) {
         await refetchFoods();
         setOpen(false);
-        setName("");
-        setPrice(0);
-        setImage(undefined);
-        setIngredients("");
       } else {
-        alert(data.error || "Failed to create food");
+        alert(data.error || "Failed to save food");
       }
     } catch (error) {
-      alert("Failed to create food");
+      alert("Something went wrong");
     }
   };
-  const nameChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
-    setName(e.target.value);
-  };
-  const priceChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
-    setPrice(Number(e.target.value));
-  };
-  const fileChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
-    if (e.target.files) {
-      setImage(e.target.files[0]);
+
+  const handleDelete = async () => {
+    if (!food) return;
+    if (!confirm(`Delete "${food.name}"?`)) return;
+
+    try {
+      const res = await fetch(`http://localhost:4000/api/food/${food?._id}`, {
+        method: "DELETE",
+      });
+      if (res.ok) {
+        await refetchFoods();
+        setOpen(false);
+      } else {
+        alert("Failed to delete food");
+      }
+    } catch (err) {
+      alert("Error deleting food");
     }
   };
-  const ingredientsChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
-    setIngredients(e.target.value);
+
+  const handleFileChange = (e: ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files) setImage(e.target.files[0]);
   };
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
-        <div
-          onClick={() => setOpen(true)}
-          className="w-[270.75px] h-[241px] py-2 px-4 border border-dashed border-red-500 flex flex-col items-center justify-center gap-6 rounded-[20px]"
-        >
-          <Button
-            type="button"
-            variant="destructive"
-            className="w-10 h-10 rounded-full bg-red-500"
+        {isEditing ? (
+          // if edit mode, use provided button (like ✏️ icon)
+          triggerButton
+        ) : (
+          // if add mode, show default “+ Add Dish” card
+          <div
+            onClick={() => setOpen(true)}
+            className="w-[270.75px] h-[241px] py-2 px-4 border border-dashed border-red-500 flex flex-col items-center justify-center gap-6 rounded-[20px] cursor-pointer"
           >
-            <GoPlus size={16} />
-          </Button>
-          <p className="w-[154px] text-center text-sm leading-5 font-medium text-secondary-foreground">
-            Add new Dish to {`"${categoryName}"`}
-          </p>
-        </div>
+            <Button
+              type="button"
+              variant="destructive"
+              className="w-10 h-10 rounded-full bg-red-500"
+            >
+              <GoPlus size={16} />
+            </Button>
+            <p className="w-[154px] text-center text-sm leading-5 font-medium text-secondary-foreground">
+              Add new Dish to “{categoryName}”
+            </p>
+          </div>
+        )}
       </DialogTrigger>
+
       <DialogContent className="sm:max-w-[425px]">
         <DialogHeader>
-          <DialogTitle>Create Food</DialogTitle>
+          <DialogTitle>{isEditing ? "Edit Food" : "Create Food"}</DialogTitle>
         </DialogHeader>
+
         <div className="grid gap-4">
           <div className="grid gap-3">
             <Label htmlFor="name">Name</Label>
             <Input
               id="name"
-              name="name"
               value={name}
-              onChange={nameChangeHandler}
+              onChange={(e) => setName(e.target.value)}
             />
           </div>
+
           <div className="grid gap-3">
             <Label htmlFor="price">Price</Label>
             <Input
               id="price"
-              name="price"
               type="number"
               value={price}
-              onChange={priceChangeHandler}
+              onChange={(e) => setPrice(Number(e.target.value))}
             />
           </div>
-          <div className="grid w-full max-w-sm items-center gap-3">
-            <Label htmlFor="picture">Picture</Label>
-            <Input id="picture" type="file" onChange={fileChangeHandler} />
-          </div>
+
           <div className="grid gap-3">
             <Label htmlFor="ingredients">Ingredients</Label>
             <Input
               id="ingredients"
-              name="ingredients"
               value={ingredients}
-              onChange={ingredientsChangeHandler}
+              onChange={(e) => setIngredients(e.target.value)}
             />
           </div>
 
+          <div className="grid gap-3">
+            <Label htmlFor="picture">Picture</Label>
+            <Input id="picture" type="file" onChange={handleFileChange} />
+            {food?.imageUrl && !image && (
+              <img
+                src={food.imageUrl}
+                alt=""
+                className="w-full h-32 object-cover rounded-md mt-2"
+              />
+            )}
+          </div>
+
           <Button
-            type="submit"
-            size={"sm"}
+            type="button"
+            size="sm"
             className="w-fit px-4 py-[10px]"
-            onClick={addFoodHandler}
+            onClick={handleSubmit}
           >
-            <p className="leading-5"> Save changes</p>
+            {isEditing ? "Save changes" : "Create"}
           </Button>
+
+          {isEditing && (
+            <Button
+              variant="destructive"
+              type="button"
+              size="sm"
+              onClick={handleDelete}
+            >
+              Delete
+            </Button>
+          )}
         </div>
+
         <DialogFooter></DialogFooter>
       </DialogContent>
     </Dialog>

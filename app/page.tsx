@@ -68,6 +68,7 @@ export default function Page() {
       body: JSON.stringify(category),
     });
   };
+  console.log("foods", foods);
 
   return (
     <AdminLayout>
