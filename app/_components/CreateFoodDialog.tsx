@@ -7,13 +7,7 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
+
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { ChangeEvent, useEffect, useState } from "react";
@@ -104,7 +98,7 @@ export const CreateFoodDialog = ({
             <GoPlus size={16} />
           </Button>
           <p className="w-[154px] text-center text-sm leading-5 font-medium text-secondary-foreground">
-            Add new Dish to {`${categoryName}`}
+            Add new Dish to {`"${categoryName}"`}
           </p>
         </div>
       </DialogTrigger>

@@ -1,5 +1,7 @@
 import { CategoryType, FoodType } from "@/lib/types";
 import { CreateFoodDialog } from "./CreateFoodDialog";
+import { LuPen } from "react-icons/lu";
+import { Console } from "console";
 
 export const CategorizedFoods = ({
   foods,
@@ -10,6 +12,9 @@ export const CategorizedFoods = ({
   category: CategoryType;
   refetchFoods: () => Promise<void>;
 }) => {
+  function editFoodData() {
+    console.log("hello");
+  }
   return (
     <div className=" border p-5 flex flex-col gap-4 rounded-lg bg-white">
       <h2>{category.name}</h2>
@@ -24,12 +29,18 @@ export const CategorizedFoods = ({
             key={food._id}
             className="w-68 h-60 rounded-2xl flex flex-col border-1 p-4 gap-5"
           >
-            <div className="w-60 h-32">
+            <div className="w-60 h-32 relative">
               <img
                 src={food.imageUrl}
                 alt=""
-                className="w-full h-full object-fill rounded-xl"
+                className="w-full h-full object-fill rounded-xl "
               />
+              <button
+                onClick={() => editFoodData()}
+                className="absolute bottom-5 right-5 w-11 h-11 bg-white rounded-full flex items-center justify-center"
+              >
+                <LuPen className="w-4 h-4 text-red-500" />
+              </button>
             </div>
 
             <div className="w-60 h-15 flex flex-col gap-2">
