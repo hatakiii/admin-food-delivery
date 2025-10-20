@@ -58,17 +58,23 @@ export default function Page() {
     await getCategories();
   };
 
-  const deleteCategoryHandler = async (category: string) => {
-    await fetch("http://localhost:4000/api/categories/delete", {
-      method: "POST",
-      mode: "no-cors",
-      headers: {
-        "Content-type": "application/json",
-      },
-      body: JSON.stringify(category),
+  const deleteCategoryHandler = async (id: string) => {
+    if (!window.confirm("Delete this category?")) return;
+
+    const res = await fetch(`http://localhost:4000/api/categories?id=${id}`, {
+      method: "DELETE",
     });
+
+    const data = await res.json();
+
+    if (!res.ok) {
+      alert(data.error); // 👈 shows "Cannot delete category: it has related foods"
+      return;
+    }
+
+    alert("Category deleted");
+    await getCategories();
   };
-  console.log("foods", foods);
 
   return (
     <AdminLayout>
@@ -82,6 +88,7 @@ export default function Page() {
                 key={category._id}
               >
                 {category.name}
+
                 <X
                   className="hover:bg-gray-400/20 w-4"
                   onClick={() => deleteCategoryHandler(category._id)}

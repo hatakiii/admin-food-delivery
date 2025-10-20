@@ -120,10 +120,10 @@ export const CreateFoodDialog = ({
         )}
       </DialogTrigger>
 
-      <DialogContent className="w-118 h-149 absolute gap-0">
-        <DialogHeader className="h-7">
-          <DialogTitle className="font-semibold text-[#09090B] text-xl leading-none">
-            {isEditing ? "Edit Food" : "Create Food"}
+      <DialogContent className="w-118 min-h-148 absolute gap-0">
+        <DialogHeader className="w-103 h-13">
+          <DialogTitle className="font-semibold text-[#09090B] text-xl leading-none w-103 h-13">
+            {isEditing ? "Dishes Info" : "Create Food"}
           </DialogTitle>
         </DialogHeader>
 
@@ -179,6 +179,7 @@ export const CreateFoodDialog = ({
               />
             )}
           </div>
+          <div className="w-103 h-16"></div>
           <div className="flex justify-between w-106 h-10 absolute bottom-6 right-6">
             {isEditing ? (
               <Button
