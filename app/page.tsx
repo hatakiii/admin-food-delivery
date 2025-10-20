@@ -11,6 +11,7 @@ import {
 import { ChangeEvent, useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+
 import { X } from "lucide-react";
 import { CategoryType, FoodType } from "@/lib/types";
 import { CategorizedFoods } from "./_components/CategorizedFoods";
@@ -76,25 +77,38 @@ export default function Page() {
     await getCategories();
   };
 
+  console.log("categories", categories);
+
   return (
     <AdminLayout>
       <div className="bg-gray-100 h-full">
         <div className="flex flex-col gap-4 p-6">
           <h1 className="text-xl">Dishes category</h1>
           <div className="flex gap-2 flex-wrap ">
-            {categories.map((category) => (
-              <div
-                className="flex items-center border-2 rounded-full p-2 py-0"
-                key={category._id}
-              >
-                {category.name}
+            {categories.map((category) => {
+              const foodCount = foods.filter(
+                (food) => food.categoryId._id === category._id
+              ).length;
 
-                <X
-                  className="hover:bg-gray-400/20 w-4"
-                  onClick={() => deleteCategoryHandler(category._id)}
-                />
-              </div>
-            ))}
+              return (
+                <div
+                  key={category._id}
+                  className="flex items-center gap-2 border-2 rounded-full px-3 py-1"
+                >
+                  <span>{category.name}</span>
+
+                  <Badge className="bg-white text-sm  text-amber-500">
+                    {foodCount}
+                  </Badge>
+
+                  <X
+                    className="hover:bg-gray-400/20 w-4 cursor-pointer"
+                    onClick={() => deleteCategoryHandler(category._id)}
+                  />
+                </div>
+              );
+            })}
+
             <Dialog open={modalOpen}>
               <DialogTrigger asChild>
                 <Badge
