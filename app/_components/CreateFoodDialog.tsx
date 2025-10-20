@@ -100,10 +100,8 @@ export const CreateFoodDialog = ({
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
         {isEditing ? (
-          // if edit mode, use provided button (like ✏️ icon)
           triggerButton
         ) : (
-          // if add mode, show default “+ Add Dish” card
           <div
             onClick={() => setOpen(true)}
             className="w-[270.75px] h-[241px] py-2 px-4 border border-dashed border-red-500 flex flex-col items-center justify-center gap-6 rounded-[20px] cursor-pointer"
@@ -122,43 +120,57 @@ export const CreateFoodDialog = ({
         )}
       </DialogTrigger>
 
-      <DialogContent className="sm:max-w-[425px]">
-        <DialogHeader>
-          <DialogTitle>{isEditing ? "Edit Food" : "Create Food"}</DialogTitle>
+      <DialogContent className="w-118 h-149 absolute gap-0">
+        <DialogHeader className="h-7">
+          <DialogTitle className="font-semibold text-[#09090B] text-xl leading-none">
+            {isEditing ? "Edit Food" : "Create Food"}
+          </DialogTitle>
         </DialogHeader>
 
-        <div className="grid gap-4">
-          <div className="grid gap-3">
-            <Label htmlFor="name">Name</Label>
-            <Input
-              id="name"
-              value={name}
-              onChange={(e) => setName(e.target.value)}
-            />
+        <div className="flex flex-col gap-4">
+          <div className="w-103 h-15 flex gap-6">
+            <div className="flex flex-col gap-3">
+              <Label htmlFor="name" className="">
+                Food name
+              </Label>
+              <Input
+                id="name"
+                value={name}
+                onChange={(e) => setName(e.target.value)}
+                className="w-48"
+              />
+            </div>
+
+            <div className="flex flex-col gap-3">
+              <Label htmlFor="price">Price</Label>
+              <Input
+                id="price"
+                type="number"
+                value={price}
+                onChange={(e) => setPrice(Number(e.target.value))}
+                className="w-48"
+              />
+            </div>
           </div>
 
-          <div className="grid gap-3">
-            <Label htmlFor="price">Price</Label>
-            <Input
-              id="price"
-              type="number"
-              value={price}
-              onChange={(e) => setPrice(Number(e.target.value))}
-            />
-          </div>
-
-          <div className="grid gap-3">
+          <div className="w-103 h-28 flex flex-col gap-3">
             <Label htmlFor="ingredients">Ingredients</Label>
             <Input
               id="ingredients"
               value={ingredients}
               onChange={(e) => setIngredients(e.target.value)}
+              className="h-22"
             />
           </div>
 
-          <div className="grid gap-3">
-            <Label htmlFor="picture">Picture</Label>
-            <Input id="picture" type="file" onChange={handleFileChange} />
+          <div className="flex flex-col w-103 h-40 gap-3">
+            <Label htmlFor="picture">Food image</Label>
+            <Input
+              id="picture"
+              type="file"
+              onChange={handleFileChange}
+              className="h-34"
+            />
             {food?.imageUrl && !image && (
               <img
                 src={food.imageUrl}
@@ -167,26 +179,28 @@ export const CreateFoodDialog = ({
               />
             )}
           </div>
-
-          <Button
-            type="button"
-            size="sm"
-            className="w-fit px-4 py-[10px]"
-            onClick={handleSubmit}
-          >
-            {isEditing ? "Save changes" : "Create"}
-          </Button>
-
-          {isEditing && (
+          <div className="flex justify-between w-106 h-10 absolute bottom-6 right-6">
+            {isEditing ? (
+              <Button
+                variant="destructive"
+                type="button"
+                size="sm"
+                onClick={handleDelete}
+              >
+                Delete
+              </Button>
+            ) : (
+              <div className="w-12 h-10"></div>
+            )}
             <Button
-              variant="destructive"
               type="button"
               size="sm"
-              onClick={handleDelete}
+              className="w-fit px-4 py-[10px] "
+              onClick={handleSubmit}
             >
-              Delete
+              {isEditing ? "Save changes" : "Create"}
             </Button>
-          )}
+          </div>
         </div>
 
         <DialogFooter></DialogFooter>
