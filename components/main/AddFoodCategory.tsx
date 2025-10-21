@@ -1,0 +1,60 @@
+import { useState, ChangeEvent } from "react";
+
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
+import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+
+import { FaPlus, FaPen } from "react-icons/fa6";
+import { IoIosClose } from "react-icons/io";
+
+export const AddFoodCategory = ({
+  getCategories,
+}: {
+  getCategories: () => Promise<void>;
+}) => {
+  const [newCategory, setNewCategory] = useState<string | undefined>();
+  const createCategoryHandler = async () => {
+    await fetch("http://localhost:4000/api/categories", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ newCategory }),
+    });
+    await getCategories();
+  };
+  const newCategoryNameChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
+    setNewCategory(e.target.value);
+  };
+  return (
+    <div>
+      <Dialog>
+        <DialogTrigger asChild>
+          <Badge
+            variant={"outline"}
+            className="cursor-pointer hover:bg-gray-500/20 bg-red-600 w-9 h-9 rounded-full"
+          >
+            <FaPlus className="w-4 h-4 text-white" />
+          </Badge>
+        </DialogTrigger>
+        <DialogContent className="w-[463px] p-6 ">
+          <DialogHeader>
+            <DialogTitle>Add new category</DialogTitle>
+          </DialogHeader>
+          <p>Category name</p>
+          <Input
+            type="text"
+            placeholder="new category"
+            onChange={newCategoryNameChangeHandler}
+          />
+          <Button onClick={createCategoryHandler}>Add category</Button>
+        </DialogContent>
+      </Dialog>
+    </div>
+  );
+};

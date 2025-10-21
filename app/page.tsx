@@ -16,6 +16,8 @@ import { X } from "lucide-react";
 import { CategoryType, FoodType } from "@/lib/types";
 import { CategorizedFoods } from "./_components/CategorizedFoods";
 import { FaPlus } from "react-icons/fa6";
+import { IoIosClose } from "react-icons/io";
+import { FoodCategories } from "@/components/main";
 
 export default function Page() {
   const [categories, setCategories] = useState<CategoryType[]>([]);
@@ -85,7 +87,7 @@ export default function Page() {
         <div className="flex flex-col gap-4 p-6">
           <h1 className="text-xl">Dishes category</h1>
           <div className="flex gap-2 flex-wrap ">
-            {categories.map((category) => {
+            {/* {categories.map((category) => {
               const foodCount = foods.filter(
                 (food) => food.categoryId._id === category._id
               ).length;
@@ -119,18 +121,28 @@ export default function Page() {
                   <FaPlus className="w-4 h-4 text-white" />
                 </Badge>
               </DialogTrigger>
-              <DialogContent className="w-[463px] p-6">
+              <DialogContent className="w-[463px] p-6 ">
+                <button onClick={Z} className="w-9 h-9 rounded-full flex items-center justify-center absolute top-6 right-6">
+                  <IoIosClose />
+                </button>
+
                 <DialogHeader>
-                  <DialogTitle>Are you absolutely sure?</DialogTitle>
+                  <DialogTitle>Add new category</DialogTitle>
                 </DialogHeader>
+                <p>Category name</p>
                 <Input
                   type="text"
                   placeholder="new category"
                   onChange={newCategoryNameChangeHandler}
                 />
-                <Button onClick={createCategoryHandler}>Create</Button>
+                <Button onClick={createCategoryHandler}>Add category</Button>
               </DialogContent>
-            </Dialog>
+            </Dialog> */}
+            <FoodCategories
+              getCategories={getCategories}
+              categories={categories}
+              foods={foods}
+            />
           </div>
         </div>
         {categories.map((category) => {
