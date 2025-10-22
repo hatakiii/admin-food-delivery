@@ -1,3 +1,12 @@
+let backendUrl = "";
+
+const env = process.env.NODE_ENV;
+if (env == "development") {
+  backendUrl = "http://localhost:4000";
+} else if (env == "production") {
+  backendUrl = "https://backend-food-delivery-one.vercel.app";
+}
+
 export const addFoodHandler = async (
   name: string,
   price: number,
@@ -19,7 +28,7 @@ export const addFoodHandler = async (
   form.append("category", category);
 
   try {
-    const response = await fetch("http://localhost:4000/api/food", {
+    const response = await fetch(`${backendUrl}/api/food`, {
       method: "POST",
       body: form,
     });

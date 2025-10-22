@@ -12,6 +12,14 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 
 import { FaPlus } from "react-icons/fa6";
+let backendUrl = "";
+
+const env = process.env.NODE_ENV;
+if (env == "development") {
+  backendUrl = "http://localhost:4000";
+} else if (env == "production") {
+  backendUrl = "https://backend-food-delivery-one.vercel.app";
+}
 
 export const AddFoodCategory = ({
   getCategories,
@@ -20,7 +28,7 @@ export const AddFoodCategory = ({
 }) => {
   const [newCategory, setNewCategory] = useState<string | undefined>();
   const createCategoryHandler = async () => {
-    await fetch("http://localhost:4000/api/categories", {
+    await fetch(`${backendUrl}/api/categories`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ newCategory }),

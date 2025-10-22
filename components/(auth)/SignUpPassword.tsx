@@ -21,6 +21,15 @@ import Link from "next/link";
 import Image from "next/image";
 import { StepProps } from "@/lib/types";
 
+let backendUrl = "";
+
+const env = process.env.NODE_ENV;
+if (env == "development") {
+  backendUrl = "http://localhost:4000";
+} else if (env == "production") {
+  backendUrl = "https://backend-food-delivery-one.vercel.app";
+}
+
 // ✅ Fix schema to check that passwords match
 const formSchema = z
   .object({
@@ -56,7 +65,7 @@ export const SignUpPassword = ({
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
     try {
-      const result = await fetch("http://localhost:4000/api/register", {
+      const result = await fetch(`${backendUrl}/api/register`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

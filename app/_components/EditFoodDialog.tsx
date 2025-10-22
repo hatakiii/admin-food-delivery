@@ -13,6 +13,15 @@ import { Label } from "@/components/ui/label";
 import { ChangeEvent, useState } from "react";
 import { GoPlus } from "react-icons/go";
 
+let backendUrl = "";
+
+const env = process.env.NODE_ENV;
+if (env == "development") {
+  backendUrl = "http://localhost:4000";
+} else if (env == "production") {
+  backendUrl = "https://backend-food-delivery-one.vercel.app";
+}
+
 export type CategoryType = {
   name: string;
   _id: string;
@@ -48,7 +57,7 @@ export const EditFoodDialog = ({
     form.append("categoryId", categoryId);
 
     try {
-      const response = await fetch("http://localhost:4000/api/food", {
+      const response = await fetch(`${backendUrl}/api/food`, {
         method: "PUT",
         body: form,
       });

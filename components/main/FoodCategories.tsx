@@ -8,6 +8,14 @@ import { X } from "lucide-react";
 import { FaPen } from "react-icons/fa6";
 
 import { AddFoodCategory } from "./AddFoodCategory";
+let backendUrl = "";
+
+const env = process.env.NODE_ENV;
+if (env == "development") {
+  backendUrl = "http://localhost:4000";
+} else if (env == "production") {
+  backendUrl = "https://backend-food-delivery-one.vercel.app";
+}
 
 export const FoodCategories = ({
   getCategories,
@@ -20,7 +28,7 @@ export const FoodCategories = ({
 }) => {
   const deleteCategoryHandler = async (id: string) => {
     if (!window.confirm("Delete this category?")) return;
-    const res = await fetch(`http://localhost:4000/api/categories?id=${id}`, {
+    const res = await fetch(`${backendUrl}/api/categories?id=${id}`, {
       method: "DELETE",
     });
     const data = await res.json();
@@ -35,7 +43,7 @@ export const FoodCategories = ({
   const editCategoryHandler = async (id: string, currentName: string) => {
     const newName = prompt("Enter new category name:", currentName);
     if (!newName || newName.trim() === "") return;
-    const res = await fetch("http://localhost:4000/api/categories", {
+    const res = await fetch(`${backendUrl}/api/categories`, {
       method: "PUT",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ id, newName }),
