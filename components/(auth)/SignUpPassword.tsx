@@ -62,7 +62,7 @@ export const SignUpPassword = ({
         },
         body: JSON.stringify({
           email,
-          password: values.password, // ✅ Use form values
+          password: values.password,
           role: "ADMIN",
         }),
       });
