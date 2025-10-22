@@ -4,7 +4,7 @@ const env = process.env.NODE_ENV;
 if (env == "development") {
   backendUrl = "http://localhost:4000";
 } else if (env == "production") {
-  backendUrl = "https://backend-food-delivery-one.vercel.app";
+  backendUrl = "https://backend-food-delivery-two.vercel.app";
 }
 
 export const addFoodHandler = async (
