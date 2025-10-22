@@ -188,7 +188,8 @@ export const CreateFoodDialog = ({
               <Image
                 src={food.imageUrl}
                 alt=""
-                fill
+                width={412}
+                height={138}
                 className="w-full h-32 object-cover rounded-md mt-2"
               />
             )}
