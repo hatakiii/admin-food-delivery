@@ -19,6 +19,7 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import Image from "next/image";
+import { StepProps } from "@/lib/types";
 
 // ✅ Fix schema to check that passwords match
 const formSchema = z
@@ -33,9 +34,9 @@ const formSchema = z
 
 export const SignUpPassword = ({
   handlePrevStep,
-  onCreateUser,
+
   email,
-}: any) => {
+}: StepProps) => {
   const [isPassword, setIsPassword] = useState("password");
 
   const form = useForm<z.infer<typeof formSchema>>({
@@ -73,7 +74,7 @@ export const SignUpPassword = ({
 
       alert("User created successfully");
       console.log("User created:", await result.json());
-      onCreateUser?.();
+
       router.push("/");
     } catch (error) {
       console.error(error);
