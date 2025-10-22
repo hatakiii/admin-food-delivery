@@ -1,8 +1,8 @@
 import { CategoryType, FoodType } from "@/lib/types";
 import { CreateFoodDialog } from "./CreateFoodDialog";
 import { LuPen } from "react-icons/lu";
-import { useState } from "react";
-import { Console } from "console";
+
+import Image from "next/image";
 
 export const CategorizedFoods = ({
   foods,
@@ -13,7 +13,6 @@ export const CategorizedFoods = ({
   category: CategoryType;
   refetchFoods: () => Promise<void>;
 }) => {
-  const [selectedFood, setSelectedFood] = useState<FoodType | null>(null);
   return (
     <div className=" border p-5 flex flex-col gap-4 rounded-lg bg-white">
       <h2>{category.name}</h2>
@@ -30,9 +29,10 @@ export const CategorizedFoods = ({
             className="w-68 h-60 rounded-2xl flex flex-col border-1 p-4 gap-5"
           >
             <div className="w-60 h-32 relative">
-              <img
+              <Image
                 src={food.imageUrl}
-                alt=""
+                alt="sth"
+                fill
                 className="w-full h-full object-fill rounded-xl "
               />
               <CreateFoodDialog

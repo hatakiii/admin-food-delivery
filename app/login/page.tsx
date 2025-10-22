@@ -5,7 +5,6 @@ import { useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
 import Image from "next/image";
 import { FaChevronLeft } from "react-icons/fa";
-import { Checkbox } from "@/components/ui/checkbox";
 
 const Page = () => {
   const [password, setPassword] = useState<string>("");
@@ -79,7 +78,7 @@ const Page = () => {
           onClick={onLogin}
           className="w-full h-9 bg-black text-white"
         >
-          Let's go
+          Lets go
         </Button>
         <div className="w-full h-6 self-stretch flex justify-center items-center gap-3">
           <div className="justify-center text-muted-foreground text-base font-normal  leading-normal">

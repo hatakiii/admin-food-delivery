@@ -153,7 +153,7 @@ export const SignUpPassword = ({
             />
 
             <Button type="submit" className="w-104">
-              Let's Go
+              Let s Go
             </Button>
 
             <div className="flex gap-3 justify-center">

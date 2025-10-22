@@ -10,7 +10,7 @@ import {
 
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { ChangeEvent, useEffect, useState } from "react";
+import { ChangeEvent, useState } from "react";
 import { GoPlus } from "react-icons/go";
 
 export type CategoryType = {
@@ -66,6 +66,7 @@ export const EditFoodDialog = ({
       }
     } catch (error) {
       alert("Failed to create food");
+      console.log("error", error);
     }
   };
   const nameChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {

@@ -13,6 +13,8 @@ import { ChangeEvent, useState } from "react";
 import { GoPlus } from "react-icons/go";
 import { FoodType } from "@/lib/types";
 
+import Image from "next/image";
+
 type Props = {
   categoryId: string;
   refetchFoods: () => Promise<void>;
@@ -70,6 +72,7 @@ export const CreateFoodDialog = ({
       }
     } catch (error) {
       alert("Something went wrong");
+      console.log("err", error);
     }
   };
 
@@ -89,6 +92,7 @@ export const CreateFoodDialog = ({
       }
     } catch (err) {
       alert("Error deleting food");
+      console.log("err", err);
     }
   };
 
@@ -172,9 +176,10 @@ export const CreateFoodDialog = ({
               className="h-34"
             />
             {food?.imageUrl && !image && (
-              <img
+              <Image
                 src={food.imageUrl}
                 alt=""
+                fill
                 className="w-full h-32 object-cover rounded-md mt-2"
               />
             )}

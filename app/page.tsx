@@ -1,28 +1,17 @@
 "use client";
-import { Badge } from "@/components/ui/badge";
-import { AdminLayout } from "./_components/AdminLayout";
-import {
-  Dialog,
-  DialogContent,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-} from "@/components/ui/dialog";
-import { ChangeEvent, useEffect, useState } from "react";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
 
-import { X } from "lucide-react";
+import { AdminLayout } from "./_components/AdminLayout";
+
+import { useEffect, useState } from "react";
+
 import { CategoryType, FoodType } from "@/lib/types";
 import { CategorizedFoods } from "./_components/CategorizedFoods";
-import { FaPlus } from "react-icons/fa6";
-import { IoIosClose } from "react-icons/io";
+
 import { FoodCategories } from "@/components/main";
 
 export default function Page() {
   const [categories, setCategories] = useState<CategoryType[]>([]);
-  const [newCategory, setNewCategory] = useState<string | undefined>();
-  const [modalOpen, setModalOpen] = useState<boolean>(false);
+
   const [foods, setFoods] = useState<FoodType[]>([]);
 
   const getCategories = async () => {

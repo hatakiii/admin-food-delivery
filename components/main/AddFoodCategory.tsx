@@ -11,8 +11,7 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 
-import { FaPlus, FaPen } from "react-icons/fa6";
-import { IoIosClose } from "react-icons/io";
+import { FaPlus } from "react-icons/fa6";
 
 export const AddFoodCategory = ({
   getCategories,

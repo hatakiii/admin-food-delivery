@@ -27,5 +27,6 @@ export const addFoodHandler = async (
     return await response.json();
   } catch (error) {
     alert("Failed to create food");
+    console.log("error", error);
   }
 };
