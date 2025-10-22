@@ -9,20 +9,29 @@ import { CategorizedFoods } from "./_components/CategorizedFoods";
 
 import { FoodCategories } from "@/components/main";
 
+let backendUrl = "";
+
+const env = process.env.NODE_ENV;
+if (env == "development") {
+  backendUrl = "http://localhost:4000";
+} else if (env == "production") {
+  backendUrl = "https://backend-food-delivery-one.vercel.app";
+}
+
 export default function Page() {
   const [categories, setCategories] = useState<CategoryType[]>([]);
 
   const [foods, setFoods] = useState<FoodType[]>([]);
 
   const getCategories = async () => {
-    const result = await fetch("http://localhost:4000/api/categories");
+    const result = await fetch(`${backendUrl}/api/categories`);
     const responseData = await result.json();
     const { data } = responseData;
     setCategories(data);
   };
 
   const getFoods = async () => {
-    const result = await fetch("http://localhost:4000/api/food");
+    const result = await fetch(`${backendUrl}/api/food`);
     const responseData = await result.json();
     setFoods(responseData.data);
   };

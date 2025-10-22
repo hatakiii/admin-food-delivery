@@ -15,6 +15,15 @@ import { FoodType } from "@/lib/types";
 
 import Image from "next/image";
 
+let backendUrl = "";
+
+const env = process.env.NODE_ENV;
+if (env == "development") {
+  backendUrl = "http://localhost:4000";
+} else if (env == "production") {
+  backendUrl = "https://backend-food-delivery-one.vercel.app";
+}
+
 type Props = {
   categoryId: string;
   refetchFoods: () => Promise<void>;
@@ -55,8 +64,8 @@ export const CreateFoodDialog = ({
     try {
       const response = await fetch(
         isEditing
-          ? `http://localhost:4000/api/food/${food?._id}`
-          : `http://localhost:4000/api/food`,
+          ? `${backendUrl}/api/food/${food?._id}`
+          : `${backendUrl}/api/food`,
         {
           method: isEditing ? "PUT" : "POST",
           body: form,
@@ -81,7 +90,7 @@ export const CreateFoodDialog = ({
     if (!confirm(`Delete "${food.name}"?`)) return;
 
     try {
-      const res = await fetch(`http://localhost:4000/api/food/${food?._id}`, {
+      const res = await fetch(`${backendUrl}/api/food/${food?._id}`, {
         method: "DELETE",
       });
       if (res.ok) {
