@@ -9,6 +9,11 @@ import { CategorizedFoods } from "./_components/CategorizedFoods";
 
 import { FoodCategories } from "@/components/main";
 
+import { Badge } from "@/components/ui/badge";
+import { FaPlus } from "react-icons/fa6";
+import { Skeleton } from "@/components/ui/skeleton";
+import { Divide } from "lucide-react";
+
 let backendUrl = "";
 
 const env = process.env.NODE_ENV;
@@ -22,12 +27,15 @@ export default function Page() {
   const [categories, setCategories] = useState<CategoryType[]>([]);
 
   const [foods, setFoods] = useState<FoodType[]>([]);
+  const [categoryLoading, setCategoryLoading] = useState<boolean>(false);
 
   const getCategories = async () => {
+    setCategoryLoading(true);
     const result = await fetch(`${backendUrl}/api/categories`);
     const responseData = await result.json();
     const { data } = responseData;
     setCategories(data);
+    setCategoryLoading(false);
   };
 
   const getFoods = async () => {
@@ -49,25 +57,60 @@ export default function Page() {
         <div className="flex flex-col gap-4 p-6">
           <h1 className="text-xl">Dishes category</h1>
           <div className="flex gap-2 flex-wrap ">
-            <FoodCategories
-              getCategories={getCategories}
-              categories={categories}
-              foods={foods}
-            />
+            {categoryLoading ? (
+              <div className="flex gap-2">
+                <Badge
+                  variant={"outline"}
+                  className="cursor-pointer hover:bg-gray-500/20 bg-blue-600 w-9 h-9 rounded-full"
+                >
+                  <FaPlus className="w-4 h-4 text-white" />
+                </Badge>
+                {[...Array(5)].map((_, i) => (
+                  <Skeleton
+                    key={i}
+                    className="h-9 w-24 rounded-full bg-gray-300"
+                  />
+                ))}
+              </div>
+            ) : (
+              <FoodCategories
+                getCategories={getCategories}
+                categories={categories}
+                foods={foods}
+              />
+            )}
           </div>
         </div>
-        {categories.map((category) => {
-          return (
-            <CategorizedFoods
-              key={category._id}
-              refetchFoods={() => getFoods()}
-              foods={foods.filter(
-                (food) => food.categoryId._id == category._id
-              )}
-              category={category}
-            />
-          );
-        })}
+        {categoryLoading ? (
+          [...Array(5)].map((_, h) => (
+            <div key={h} className="flex flex-col gap-4 p-5">
+              <Skeleton className="w-25 h-7 rounded-2xl bg-gray-300" />
+              <div className="flex gap-4">
+                {[...Array(3)].map((_, i) => (
+                  <Skeleton
+                    key={i}
+                    className="w-68 h-60 rounded-xl bg-gray-300"
+                  />
+                ))}
+              </div>
+            </div>
+          ))
+        ) : (
+          <>
+            {categories.map((category) => {
+              return (
+                <CategorizedFoods
+                  key={category._id}
+                  refetchFoods={() => getFoods()}
+                  foods={foods.filter(
+                    (food) => food.categoryId._id == category._id
+                  )}
+                  category={category}
+                />
+              );
+            })}
+          </>
+        )}
       </div>
     </AdminLayout>
   );

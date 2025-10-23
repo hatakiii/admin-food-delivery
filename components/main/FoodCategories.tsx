@@ -4,7 +4,7 @@ import { CategoryType, FoodType } from "@/lib/types";
 
 import { Badge } from "@/components/ui/badge";
 
-import { X } from "lucide-react";
+import { Divide, X } from "lucide-react";
 import { FaPen } from "react-icons/fa6";
 
 import { AddFoodCategory } from "./AddFoodCategory";
