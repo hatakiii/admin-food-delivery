@@ -28,6 +28,7 @@ export default function Page() {
 
   const [foods, setFoods] = useState<FoodType[]>([]);
   const [categoryLoading, setCategoryLoading] = useState<boolean>(false);
+  const [foodLoading, setFoodLoading] = useState<boolean>(false);
 
   const getCategories = async () => {
     setCategoryLoading(true);
@@ -39,9 +40,11 @@ export default function Page() {
   };
 
   const getFoods = async () => {
+    setFoodLoading(true);
     const result = await fetch(`${backendUrl}/api/food`);
     const responseData = await result.json();
     setFoods(responseData.data);
+    setFoodLoading(false);
   };
 
   useEffect(() => {
@@ -59,12 +62,6 @@ export default function Page() {
           <div className="flex gap-2 flex-wrap ">
             {categoryLoading ? (
               <div className="flex gap-2">
-                <Badge
-                  variant={"outline"}
-                  className="cursor-pointer hover:bg-gray-500/20 bg-blue-600 w-9 h-9 rounded-full"
-                >
-                  <FaPlus className="w-4 h-4 text-white" />
-                </Badge>
                 {[...Array(5)].map((_, i) => (
                   <Skeleton
                     key={i}
@@ -81,7 +78,7 @@ export default function Page() {
             )}
           </div>
         </div>
-        {categoryLoading ? (
+        {foodLoading ? (
           [...Array(5)].map((_, h) => (
             <div key={h} className="flex flex-col gap-4 p-5">
               <Skeleton className="w-25 h-7 rounded-2xl bg-gray-300" />
