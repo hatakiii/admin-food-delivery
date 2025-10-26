@@ -9,10 +9,7 @@ import { CategorizedFoods } from "./_components/CategorizedFoods";
 
 import { FoodCategories } from "@/components/main";
 
-import { Badge } from "@/components/ui/badge";
-import { FaPlus } from "react-icons/fa6";
 import { Skeleton } from "@/components/ui/skeleton";
-import { Divide } from "lucide-react";
 
 let backendUrl = "";
 
