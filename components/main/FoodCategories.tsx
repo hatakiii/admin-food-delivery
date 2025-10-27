@@ -6,8 +6,10 @@ import { Badge } from "@/components/ui/badge";
 
 import { X } from "lucide-react";
 import { FaPen } from "react-icons/fa6";
+import { IoTrashBinOutline } from "react-icons/io5";
 
 import { AddFoodCategory } from "./AddFoodCategory";
+import { useState } from "react";
 let backendUrl = "";
 
 const env = process.env.NODE_ENV;
@@ -26,6 +28,7 @@ export const FoodCategories = ({
   categories: CategoryType[];
   foods: FoodType[];
 }) => {
+  const [badgeOpen, setBadgeOpen] = useState<boolean>(false);
   const deleteCategoryHandler = async (id: string) => {
     if (!window.confirm("Delete this category?")) return;
     const res = await fetch(`${backendUrl}/api/categories?id=${id}`, {
@@ -70,17 +73,17 @@ export const FoodCategories = ({
             className="flex items-center gap-2 border-2 rounded-full px-3 py-1"
           >
             <span>{category.name}</span>
-            <Badge className="bg-white text-sm text-amber-500">
-              {foodCount}
-            </Badge>
-            <X
-              className="hover:bg-gray-400/20 w-4 cursor-pointer"
+            <Badge className="bg-black text-white text-sm ">{foodCount}</Badge>
+
+            <IoTrashBinOutline
+              className="cursor-pointer"
               onClick={() => deleteCategoryHandler(category._id)}
             />
             <FaPen
               className="cursor-pointer"
               onClick={() => editCategoryHandler(category._id, category.name)}
             />
+            <X className="hover:bg-gray-400/20 w-4 cursor-pointer" />
           </div>
         );
       })}
