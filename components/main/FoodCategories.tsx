@@ -28,7 +28,7 @@ export const FoodCategories = ({
   categories: CategoryType[];
   foods: FoodType[];
 }) => {
-  const [badgeOpen, setBadgeOpen] = useState<boolean>(false);
+  const [badgeOpen, setBadgeOpen] = useState<string | null>(null);
   const deleteCategoryHandler = async (id: string) => {
     if (!window.confirm("Delete this category?")) return;
     const res = await fetch(`${backendUrl}/api/categories?id=${id}`, {
@@ -67,23 +67,38 @@ export const FoodCategories = ({
           (food) => food.categoryId._id === category._id
         ).length;
 
+        const isOpen = badgeOpen === category._id;
+
         return (
           <div
             key={category._id}
             className="flex items-center gap-2 border-2 rounded-full px-3 py-1"
           >
             <span>{category.name}</span>
-            <Badge className="bg-black text-white text-sm ">{foodCount}</Badge>
-
-            <IoTrashBinOutline
-              className="cursor-pointer"
-              onClick={() => deleteCategoryHandler(category._id)}
-            />
-            <FaPen
-              className="cursor-pointer"
-              onClick={() => editCategoryHandler(category._id, category.name)}
-            />
-            <X className="hover:bg-gray-400/20 w-4 cursor-pointer" />
+            <Badge
+              className="bg-black text-white text-sm h-5 rounded-full"
+              onClick={() => setBadgeOpen(isOpen ? null : category._id)}
+            >
+              {foodCount}
+            </Badge>
+            {isOpen && (
+              <div className="flex items-center justify-center gap-1">
+                <IoTrashBinOutline
+                  className="cursor-pointer"
+                  onClick={() => deleteCategoryHandler(category._id)}
+                />
+                <FaPen
+                  className="cursor-pointer"
+                  onClick={() =>
+                    editCategoryHandler(category._id, category.name)
+                  }
+                />
+                <X
+                  className="hover:bg-gray-400/20 w-4 cursor-pointer"
+                  onClick={() => setBadgeOpen(null)}
+                />
+              </div>
+            )}
           </div>
         );
       })}

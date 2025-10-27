@@ -12,7 +12,7 @@ import { Label } from "@/components/ui/label";
 import { ChangeEvent, useState } from "react";
 import { GoPlus } from "react-icons/go";
 import { FoodType } from "@/lib/types";
-
+import { X } from "lucide-react";
 import Image from "next/image";
 
 let backendUrl = "";
@@ -106,7 +106,10 @@ export const CreateFoodDialog = ({
   };
 
   const handleFileChange = (e: ChangeEvent<HTMLInputElement>) => {
-    if (e.target.files) setImage(e.target.files[0]);
+    if (e.target.files && e.target.files[0]) {
+      const file = e.target.files[0];
+      setImage(file);
+    }
   };
 
   return (
@@ -176,24 +179,58 @@ export const CreateFoodDialog = ({
             />
           </div>
 
-          <div className="flex flex-col w-103 h-40 gap-3">
+          <div className="flex flex-col w-103 gap-3">
             <Label htmlFor="picture">Food image</Label>
-            <Input
-              id="picture"
-              type="file"
-              onChange={handleFileChange}
-              className="h-34"
-            />
-            {food?.imageUrl && !image && (
-              <Image
-                src={food.imageUrl}
-                alt=""
-                width={412}
-                height={138}
-                className="w-full h-32 object-cover rounded-md mt-2"
+
+            <div
+              className="relative w-full h-40 border-2 border-dashed border-gray-300 rounded-md flex flex-col items-center justify-center text-sm text-gray-500 cursor-pointer hover:border-gray-400 overflow-hidden"
+              onClick={() => document.getElementById("picture")?.click()}
+            >
+              {image ? (
+                <Image
+                  src={URL.createObjectURL(image)}
+                  alt="Preview"
+                  width={400}
+                  height={160}
+                  className="absolute inset-0 w-full h-full object-cover rounded-md"
+                />
+              ) : food?.imageUrl ? (
+                <Image
+                  src={food.imageUrl}
+                  alt="Current food image"
+                  width={400}
+                  height={160}
+                  className="absolute inset-0 w-full h-full object-cover rounded-md"
+                />
+              ) : (
+                <p>Choose file or drag an image here</p>
+              )}
+              <Input
+                id="picture"
+                type="file"
+                accept="image/*"
+                onChange={handleFileChange}
+                className="absolute inset-0 opacity-0 cursor-pointer"
               />
-            )}
+              {(image || food?.imageUrl) && (
+                <button
+                  type="button"
+                  className="absolute top-2 right-2 bg-black/60 text-white p-1 rounded-full hover:bg-black/80 z-10 "
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    setImage(undefined);
+                    const input = document.getElementById(
+                      "picture"
+                    ) as HTMLInputElement;
+                    if (input) input.value = "";
+                  }}
+                >
+                  <X size={14} />
+                </button>
+              )}
+            </div>
           </div>
+
           <div className="w-103 h-16"></div>
           <div className="flex justify-between w-106 h-10 absolute bottom-6 right-6">
             {isEditing ? (
