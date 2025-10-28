@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
 import Image from "next/image";
 import { FaChevronLeft } from "react-icons/fa";
+import Link from "next/link";
 
 let backendUrl = "";
 
@@ -42,10 +43,15 @@ const Page = () => {
       }),
     });
     const response = await result.json();
-    if (response.success) {
-      localStorage.setItem("userEmail", email);
 
-      router.push("/");
+    if (response.success) {
+      if (response.data.role === "ADMIN") {
+        localStorage.setItem("userEmail", email);
+
+        router.push("/");
+      } else {
+        alert("Access denied. Only admins can access this site.");
+      }
     } else {
       alert("Login failed");
     }
@@ -93,9 +99,11 @@ const Page = () => {
           <div className="justify-center text-muted-foreground text-base font-normal  leading-normal">
             Don’t have an account?
           </div>
-          <div className="justify-center text-blue-primary text-base font-normal  leading-normal">
-            Sign up
-          </div>
+          <Link href="/register">
+            <div className="justify-center text-blue-primary text-base font-normal  leading-normal">
+              Sign up
+            </div>
+          </Link>
         </div>
       </div>
       <div className="w-[60vw] h-[95vh]  rounded-2xl overflow-hidden mr-5">

@@ -3,3 +3,4 @@ export * from "@/app/_components/Header";
 export * from "@/app/_components/Sidebar";
 export * from "@/app/_components/CategorizedFoods";
 export * from "@/app/_components/CreateFoodDialog";
+export * from "@/app/_components/UserLogout";
