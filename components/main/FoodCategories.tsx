@@ -61,7 +61,7 @@ export const FoodCategories = ({
   };
 
   return (
-    <div className="flex">
+    <div className="flex gap-3">
       {categories.map((category) => {
         const foodCount = foods.filter(
           (food) => food.categoryId._id === category._id
@@ -74,7 +74,7 @@ export const FoodCategories = ({
             key={category._id}
             className="flex items-center gap-2 border-2 rounded-full px-3 py-1"
           >
-            <span>{category.name}</span>
+            <span className="whitespace-nowrap">{category.name}</span>
             <Badge
               className="bg-black text-white text-sm h-5 rounded-full"
               onClick={() => setBadgeOpen(isOpen ? null : category._id)}
