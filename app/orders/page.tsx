@@ -54,6 +54,10 @@ const Page = () => {
     getOrders();
   }, []);
 
+  const changeStatus = () => {
+    console.log("change status");
+  };
+
   console.log("orders", orders);
 
   return (
@@ -130,7 +134,7 @@ const Page = () => {
                 <p>{item.address || "—"}</p>
               </div>
               <div className="w-40 flex items-center justify-between px-4">
-                <p>{item.status}</p>
+                <Button onClick={changeStatus}>{item.status}</Button>
                 <LuChevronsUpDown />
               </div>
             </div>
