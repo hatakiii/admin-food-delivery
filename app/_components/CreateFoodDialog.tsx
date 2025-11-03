@@ -28,8 +28,8 @@ type Props = {
   categoryId: string;
   refetchFoods: () => Promise<void>;
   categoryName: string;
-  food?: FoodType; // optional — for edit mode
-  triggerButton?: React.ReactNode; // for ✏️ icon trigger
+  food?: FoodType;
+  triggerButton?: React.ReactNode;
 };
 
 export const CreateFoodDialog = ({

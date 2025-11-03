@@ -59,7 +59,6 @@ const Page = () => {
     getOrders();
   }, []);
 
-  // 🔹 Function to update order status
   const changeStatus = async (orderId: string, newStatus: string) => {
     try {
       setLoading(true);
@@ -72,7 +71,7 @@ const Page = () => {
       if (!response.ok) throw new Error("Failed to update status");
 
       const { order } = await response.json();
-      // Update local state instantly
+
       setOrders((prev) =>
         prev.map((o) =>
           o._id === orderId ? { ...o, status: order.status } : o
